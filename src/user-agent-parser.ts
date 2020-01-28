@@ -45,6 +45,24 @@ export function getPlatformFrom(userAgent: string | undefined): Platform {
     };
   }
   const platformInfo = extractNameAndVersion(rawPlatorm);
+  if (isIOS(platformInfo.name)) {
+    return {
+      name: 'ios',
+      version: platformInfo.version,
+    };
+  }
+  if (isLinux(platformInfo.name)) {
+    return {
+      name: 'linux',
+      version: platformInfo.version,
+    };
+  }
+  if (isAndroid(platformInfo.name)) {
+    return {
+      name: 'android',
+      version: platformInfo.version,
+    };
+  }
   if (isMacOsX(platformInfo.name)) {
     return {
       name: 'osx',
@@ -106,6 +124,27 @@ export function isWindows(platformName: string | undefined): boolean {
   const result = platformName.toLowerCase().includes('windows');
   return result;
 }
+export function isLinux(platformName: string | undefined): boolean {
+  if (platformName === undefined) {
+    return false;
+  }
+  const result = platformName.toLowerCase().includes('linux');
+  return result;
+}
+export function isAndroid(platformName: string | undefined): boolean {
+  if (platformName === undefined) {
+    return false;
+  }
+  const result = platformName.toLowerCase().includes('android');
+  return result;
+}
+export function isIOS(platformName: string | undefined): boolean {
+  if (platformName === undefined) {
+    return false;
+  }
+  const result = platformName.toLowerCase().includes('ios');
+  return result;
+}
 
 export function extractNameAndVersion(input: string | undefined | null): NameVersion {
   if (input === undefined || input === null) {
@@ -117,7 +156,7 @@ export function extractNameAndVersion(input: string | undefined | null): NameVer
   const version =
     input
       .split(' ')
-      .filter((item) => semver.valid(item) !== null)
+      .filter((item) => semver.coerce(item) !== null)
       .pop() || 'unknown';
   const name = input.replace(version, '').trim();
   return {

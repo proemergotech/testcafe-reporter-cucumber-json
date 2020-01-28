@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## [4.0.1] - 2020-01-28
+
+### Changed
+
+- update user-agent-parser to be able to identify `iOS`, `Android`, `Linux`
+- improve `extractNameAndVersion` method to be able to process non-typical semver versions (e.g. `Chrome 79.0.3945.117`)
+
 ## [4.0.0] - 2019-10-08
 
 ### Changed
